@@ -9,6 +9,7 @@ const App = () => {
     left: "0px",
     top: "0px"
   });
+
   const reset = () => {
     setRenderBall(false);
     setX(0);
@@ -28,17 +29,18 @@ const App = () => {
     } else if (event.keyCode === 37) {
       setX(x - 5);
     } else if (event.keyCode === 40) {
-      setX(y + 5);
+      setY(y + 5);
     } else if (event.keyCode === 38) {
-      setX(y - 5);
+      setY(y - 5);
     }
     let ballPositionCopy = { ...ballPosition };
     ballPositionCopy.left = x + "px";
     ballPositionCopy.top = y + "px";
     setBallPosition(ballPositionCopy);
   };
-  document.addEventListener("keydown", (event) => handleClick(event));
-
+  (function () {
+    document.addEventListener("keydown", (event) => handleClick(event));
+  })();
   const renderChoice = () => {
     if (renderBall) {
       return <div className="ball" style={ballPosition}></div>;
