@@ -24,6 +24,7 @@ const App = () => {
   };
 
   const handleClick = (event) => {
+    console.log("click");
     if (event.keyCode === 39) {
       setX(x + 5);
     } else if (event.keyCode === 37) {
@@ -33,14 +34,33 @@ const App = () => {
     } else if (event.keyCode === 38) {
       setY(y - 5);
     }
+    // let ballPositionCopy = { ...ballPosition };
+    // ballPositionCopy.left = x + "px";
+    // ballPositionCopy.top = y + "px";
+    // setBallPosition(ballPositionCopy);
+  };
+  React.useEffect(() => {
+    console.log(x + "-" + y);
     let ballPositionCopy = { ...ballPosition };
     ballPositionCopy.left = x + "px";
     ballPositionCopy.top = y + "px";
     setBallPosition(ballPositionCopy);
-  };
-  (function () {
-    document.addEventListener("keydown", (event) => handleClick(event));
-  })();
+  }, [x, y]);
+  // React.useEffect(function () {
+  //   document.addEventListener("keydown", (event) => handleClick(event));
+  //   // return () => {
+  //   //   document.removeEventListener("keydown", (event) => handleClick(event));
+  //   // };
+  // }, []);
+  React.useEffect(
+    function () {
+      document.addEventListener("keydown", handleClick);
+      return () => {
+        document.removeEventListener("keydown", handleClick);
+      };
+    },
+    [x, y]
+  );
   const renderChoice = () => {
     if (renderBall) {
       return <div className="ball" style={ballPosition}></div>;
